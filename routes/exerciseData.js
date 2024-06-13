@@ -49,6 +49,19 @@ router.get("/:id", async (req, res) => {
   }
 });
 
+// Fetch exercise data by patient ID
+router.get("/patient/:patientId", async (req, res) => {
+  try {
+    const exerciseData = await ExerciseData.findAll({
+      where: { patient_id: req.params.patientId },
+    });
+    res.json(exerciseData);
+  } catch (error) {
+    console.error("Error fetching exercise data by patient ID:", error);
+    res.status(500).json({ error: "Failed to fetch exercise data" });
+  }
+});
+
 // Update an exercise data entry
 router.put("/:id", async (req, res) => {
   try {
