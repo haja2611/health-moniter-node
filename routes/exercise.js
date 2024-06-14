@@ -1,10 +1,10 @@
 const express = require("express");
 const { Exercise } = require("../models/dataModels"); // Adjust the path as needed
-
+const authenticateToken = require("../middleware/auth");
 const router = express.Router();
 
 // Create a new exercise
-router.post("/", async (req, res) => {
+router.post("/", authenticateToken, async (req, res) => {
   try {
     const { Name, Description, Status } = req.body;
     const newExercise = await Exercise.create({
@@ -21,7 +21,7 @@ router.post("/", async (req, res) => {
 });
 
 // Get all exercises
-router.get("/", async (req, res) => {
+router.get("/", authenticateToken, async (req, res) => {
   try {
     const exercises = await Exercise.findAll();
     res.json(exercises);
@@ -32,7 +32,7 @@ router.get("/", async (req, res) => {
 });
 
 // Get an exercise by ID
-router.get("/:id", async (req, res) => {
+router.get("/:id", authenticateToken, async (req, res) => {
   try {
     const exercise = await Exercise.findByPk(req.params.id);
     if (exercise) {
@@ -47,7 +47,7 @@ router.get("/:id", async (req, res) => {
 });
 
 // Update an exercise
-router.put("/:id", async (req, res) => {
+router.put("/:id", authenticateToken, async (req, res) => {
   try {
     const { Name, Description, Status } = req.body;
     const [updated] = await Exercise.update(
@@ -67,7 +67,7 @@ router.put("/:id", async (req, res) => {
 });
 
 // Delete an exercise
-router.delete("/:id", async (req, res) => {
+router.delete("/:id", authenticateToken, async (req, res) => {
   try {
     const deleted = await Exercise.destroy({ where: { id: req.params.id } });
     if (deleted) {

@@ -2,11 +2,11 @@ const express = require("express");
 const { Patient } = require("../models/dataModels"); // Adjust the path as needed
 const { PatientNotes } = require("../models/dataModels");
 const { Data } = require("../models/dataModels");
-
+const authenticateToken = require("../middleware/auth");
 const router = express.Router();
 
 // Create a new patient
-router.post("/", async (req, res) => {
+router.post("/", authenticateToken, async (req, res) => {
   try {
     const { First_name, Last_name, Exercise_type } = req.body;
     const newPatient = await Patient.create({
@@ -23,7 +23,7 @@ router.post("/", async (req, res) => {
 });
 
 // Get all patients
-router.get("/", async (req, res) => {
+router.get("/", authenticateToken, async (req, res) => {
   try {
     const patients = await Patient.findAll();
     res.json(patients);
@@ -34,7 +34,7 @@ router.get("/", async (req, res) => {
 });
 
 // Get a patient by ID
-router.get("/:id", async (req, res) => {
+router.get("/:id", authenticateToken, async (req, res) => {
   try {
     const patient = await Patient.findByPk(req.params.id);
     if (patient) {
@@ -49,7 +49,7 @@ router.get("/:id", async (req, res) => {
 });
 
 // Update a patient
-router.put("/:id", async (req, res) => {
+router.put("/:id", authenticateToken, async (req, res) => {
   try {
     const { First_name, Last_name, Exercise_type } = req.body;
     const [updated] = await Patient.update(
@@ -69,7 +69,7 @@ router.put("/:id", async (req, res) => {
 });
 
 // Delete a patient
-router.delete("/:id", async (req, res) => {
+router.delete("/:id", authenticateToken, async (req, res) => {
   const patientId = req.params.id;
   try {
     // First, delete associated ExerciseData records

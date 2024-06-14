@@ -50,7 +50,7 @@ const Exercise = sequelize.define("Exercise", {
   },
 });
 
-const Data = sequelize.define("ExerciseData", {
+const ExerciseData = sequelize.define("ExerciseData", {
   patient_id: {
     type: DataTypes.INTEGER,
     allowNull: false,
@@ -124,4 +124,4 @@ const PatientNotes = sequelize.define("PatientNotes", {
 
 sequelize.sync();
 
-module.exports = { sequelize, Patient, Exercise, Data, PatientNotes };
+module.exports = { sequelize, Patient, Exercise, ExerciseData, PatientNotes };
