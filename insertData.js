@@ -14,7 +14,7 @@ const {
 
 const insertData = async (data) => {
   try {
-    const patientId = 5; // Assuming you know the patient ID
+    const patientId = 1; // Assuming you know the patient ID
     const exerciseType = "push ups"; // Replace with actual logic to determine exercise type
 
     // Find or create exercise type
